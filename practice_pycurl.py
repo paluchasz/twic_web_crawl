@@ -19,4 +19,6 @@ for i in range(1140, 1251):
     with zipfile.ZipFile(path_to_save_location, 'r') as myzip:
         myzip.extractall(unzipped_location)
 
+    os.remove(path_to_save_location)
+
 c.close()
