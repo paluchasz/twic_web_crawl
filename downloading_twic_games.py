@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import pycurl
 from io import BytesIO
 import os
@@ -48,7 +50,8 @@ def downloadPGNfile(start, end):
 # This function goes through a text file "twic_number_to_be_downloaded" line by line and then
 # calls the other function to download the correct file. If this file has been downloaded successfuly
 # we delete this number so that we don't download the same file next time. Finally, we write to the
-# text file the next number which should be downloaded next time.
+# text file the next number which should be downloaded next time. We run this program weekly with
+# crontab in Bash
 def checkAndPerformDownloadIfNeccessary():
     path1 = Path("/home/paluchasz/Desktop/chessbase_stuff/downloading_twic/twic_number_to_be_downloaded_next.txt")
     # path1 is the path to the text document which whill be updated as files are downloaded weekly
@@ -68,7 +71,7 @@ def checkAndPerformDownloadIfNeccessary():
                 # once the file gets truncated below we still have this pgn to be downloaded
                 # next time
 
-        # truncuate() deletes all lines in the file (except what we "wrote" in the for loop)
+        # truncate() deletes all lines in the file (except what we "wrote" in the for loop)
         file.truncate()
 
         # If the file who's number was last in the list was downloaded, then we want to add
