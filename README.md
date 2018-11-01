@@ -25,7 +25,9 @@ Documentation for zipfile: https://docs.python.org/3/library/zipfile.html#zipfil
 Automating the process:
 
 Firstly, I updated my script. The idea is to have a separate text document with numbers which represent which twic file I need to download. So for each number/line in document the function which downloads pgn will be called and after this was successful the number will be deleted from the text file. Finally, we write a new number for the file that needs to be downloaded next week. It took me ages to work out how I can read and write in a text file...
+
 How do we know whether download ‘was successful’? - Well, in my function to download PGN I added an exception. This would catch a BadZipFile error if the program tried to download a file which was not uploaded to the website yet. I am assuming more things can go wrong but I guess I will find out later?
+
 How did I set up to execute it weekly? - I wrote a cronjob for this. Have to write $ crontab -e (use -l if you want to see a list of cron jobs) in terminal and then I used: 
 30 12 * * 2 /home/paluchasz/My_projects/downloading_twic_games.py. 
 I also added a shebang line in Python which I am not sure if it is necessary: #!/usr/bin/python3
