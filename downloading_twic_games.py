@@ -17,7 +17,7 @@ def downloadPGNfile(start, end):
     file and deleting the zip.
     integer start: the first twic file you want to download
     integer end: the final twic file you want to download
-    return True on success and False on failure 
+    return True on success and False on failure
     '''
     # Initialise Curl object
     c = pycurl.Curl()
@@ -71,10 +71,13 @@ def checkAndPerformDownloadIfNeccessary():
     with open(path1, 'r+') as file: # r+ seems to be the read/write mode
 
         lines = file.readlines() # read the document into variable lines
+        print(lines) # has the form ['1268\n', '1269\n', ...] however sometimes the
+        # \n is not present and then it starts writing to the same line so need to fix.
 
         file.seek(0) # start at the beginning of file
         for line in lines:
             num = line
+
             if downloadPGNfile(int(num), int(num)):
                 pass
             else:
@@ -90,7 +93,13 @@ def checkAndPerformDownloadIfNeccessary():
         # the next number to the list so next time the program is executed something will be
         # tried to be downloaded and the file isn't just empty forever.
         next_zip = int(num) + 1
-        file.write(str(next_zip))
+
+        file.write(str(next_zip) + '\n')
+        # Need the \n to go to new line, as an example say we wrote manually 1268 in the text file, what
+        # lines = file.readlines() gives us is ['1268\n']. If the program is not executed and downloading
+        # this file fails on the next run of the program lines = ['1268\n', '1269' ]. This 1269 would
+        # be on a new line, however because there is no \n the next time we execute it we would get
+        # a nonsense line '12691270'
 
 
 checkAndPerformDownloadIfNeccessary()
