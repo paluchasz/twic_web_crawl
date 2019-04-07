@@ -1,4 +1,4 @@
-Downloading TWIC games 
+Downloading TWIC games project
 
 The week in chess website uploads weekly chess games files which I should be adding to my Chessbase Twic database so I have the latest games available. Unfortunately, I haven't done this for about two years and now I have to download more than 100 zip files. 
 
