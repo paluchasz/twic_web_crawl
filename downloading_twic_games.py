@@ -27,7 +27,7 @@ def downloadPGNfile(start, end):
 
         try:
             # notice the url is without 'www', this is beacuse the url has changed, I was getting a 301 error previously
-            url = "http://theweekinchess.com/zips/twic" + str(i) + "g.zip"
+            url = "https://theweekinchess.com/zips/twic" + str(i) + "g.zip"
             name_of_zip = "twic" + str(i) + ".zip"
             save_location_path = unzipped_location_path / name_of_zip
 
