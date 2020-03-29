@@ -1,24 +1,24 @@
 #!/usr/bin/python3
 
-import pycurl
-from io import BytesIO
 import os
 import zipfile
 from pathlib import Path
-import fileinput
+
+import pycurl
 
 # path to the folder where we want to save the pgn
 unzipped_location_path = Path("/home/paluchasz/Desktop/chessbase_stuff/downloading_twic")
 # reason for using Path module is that now this code can be run on Windows as well where the paths use \ instead
 
-def downloadPGNfile(start, end):
-    '''
+
+def download_pgn(start, end):
+    """
     This function downloads zip files from TWIC website and then unzips them saving the pgn
     file and deleting the zip.
     integer start: the first twic file you want to download
     integer end: the final twic file you want to download
     return True on success and False on failure
-    '''
+    """
     # Initialise Curl object
     c = pycurl.Curl()
 
@@ -26,7 +26,7 @@ def downloadPGNfile(start, end):
     for i in range(start, end + 1):
 
         try:
-            # notice the url is without 'www', this is beacuse the url has changed, I was getting a 301 error previously
+            # notice the url is without 'www', this is because the url has changed, I was getting a 301 error previously
             url = "https://theweekinchess.com/zips/twic" + str(i) + "g.zip"
             name_of_zip = "twic" + str(i) + ".zip"
             save_location_path = unzipped_location_path / name_of_zip
@@ -57,14 +57,14 @@ def downloadPGNfile(start, end):
     c.close()
 
 
-def checkAndPerformDownloadIfNeccessary():
-    '''
+def check_if_download_needed():
+    """
     This function goes through a text file "twic_number_to_be_downloaded" line by line and then
     calls the other function to download the correct file. If this file has been downloaded successfuly
     we delete this number so that we don't download the same file next time. Finally, we write to the
     text file the next number which should be downloaded next time. We run this program weekly with
     crontab in Bash
-    '''
+    """
     path1 = unzipped_location_path / "twic_number_to_be_downloaded_next.txt"
     # path1 is the path to the text document which whill be updated as files are downloaded weekly
 
@@ -78,7 +78,7 @@ def checkAndPerformDownloadIfNeccessary():
         for line in lines:
             num = line
 
-            if downloadPGNfile(int(num), int(num)):
+            if download_pgn(int(num), int(num)):
                 pass
             else:
                 file.write(num)
@@ -102,4 +102,5 @@ def checkAndPerformDownloadIfNeccessary():
         # a nonsense line '12691270'
 
 
-checkAndPerformDownloadIfNeccessary()
+if __name__ == '__main__':
+    check_if_download_needed()
