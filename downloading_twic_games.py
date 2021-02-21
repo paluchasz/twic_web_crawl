@@ -62,16 +62,15 @@ def check_if_download_needed():
     This function goes through a json file "twic_number_to_be_downloaded" which contains a list of files to be
     downloaded. It leaves any ids that failed to download and also adds an integer corresponding to next weeks file id.
     """
-    path1 = unzipped_location_path / "twic_number_to_be_downloaded_next.json"
-    # path1 is the path to the json file which will be updated as files are downloaded weekly
+    file_name = 'twic_number_to_be_downloaded_next.json'  # json file which will be updated as files are downloaded weekly
 
-    with open(path1, 'r') as file:
+    with open(file_name, 'r') as file:
         file_ids = json.load(file)
 
     undownloaded_ids = download_pgn(ids_list=file_ids)
     undownloaded_ids.append(max(file_ids) + 1)  # Add next weeks file id
 
-    with open(path1, 'w') as file:
+    with open(file_name, 'w') as file:
         json.dump(undownloaded_ids, file)
 
 
